@@ -1,32 +1,33 @@
 <template>
   <div class="page-login">
-    <div class="page-login--layer page-login--layer-area">
+    <!-- <div class="page-login--layer page-login--layer-area">
       <ul class="circles">
         <li v-for="n in 10" :key="n"></li>
       </ul>
-    </div>
-    <div
+    </div> -->
+    <!-- <div
       class="page-login--layer page-login--layer-time"
       flex="main:center cross:center">
       {{time}}
-    </div>
+    </div> -->
+    <div class="user-login-bg" :style="{'background-image':`url(${backgroundImage})`}"></div>
     <div class="page-login--layer">
       <div
-        class="page-login--content"
-        flex="dir:top main:justify cross:stretch box:justify">
-        <div class="page-login--content-header">
+        class="page-login--content" >
+        <!-- <div class="page-login--content-header">
           <p class="page-login--content-header-motto">
             时间是一切财富中最宝贵的财富
           </p>
-        </div>
+        </div> -->
         <div
-          class="page-login--content-main"
-          flex="dir:top main:center cross:center">
+          class="page-login--content-main content-wrapper" >
+          <h2 class="slogan">
+            欢迎使用 <br />  秀才管理系统
+          </h2>
           <!-- logo -->
-          <img class="page-login--logo" src="./image/logo@2x.png">
+          <!-- <img class="page-login--logo" src="./image/logo@2x.png"> -->
           <!-- form -->
-          <div class="page-login--form">
-            <el-card shadow="never">
+          <div class="page-login--form form-container">
               <el-form
                 ref="loginForm"
                 label-position="top"
@@ -67,7 +68,6 @@
                   登录
                 </el-button>
               </el-form>
-            </el-card>
             <p
               class="page-login--options"
               flex="main:justify cross:center">
@@ -80,7 +80,7 @@
             </el-button>
           </div>
         </div>
-        <div class="page-login--content-footer">
+        <!-- <div class="page-login--content-footer">
           <p class="page-login--content-footer-locales">
             <a
               v-for="language in $languages"
@@ -103,7 +103,7 @@
             <a href="#">隐私</a>
             <a href="#">条款</a>
           </p>
-        </div>
+        </div> -->
       </div>
     </div>
     <el-dialog
@@ -123,13 +123,16 @@
 </template>
 
 <script>
-import dayjs from 'dayjs'
+const backgroundImage =
+  'https://img.alicdn.com/tfs/TB1zsNhXTtYBeNjy1XdXXXXyVXa-2252-1500.png';
+// import dayjs from 'dayjs'
 import { mapActions } from 'vuex'
 export default {
   data () {
     return {
+      backgroundImage: backgroundImage,
       timeInterval: null,
-      time: dayjs().format('HH:mm:ss'),
+      // time: dayjs().format('HH:mm:ss'),
       // 快速选择用户
       dialogVisible: false,
       users: [
@@ -182,9 +185,9 @@ export default {
     }
   },
   mounted () {
-    this.timeInterval = setInterval(() => {
-      this.refreshTime()
-    }, 1000)
+    // this.timeInterval = setInterval(() => {
+    //   this.refreshTime()
+    // }, 1000)
   },
   beforeDestroy () {
     clearInterval(this.timeInterval)
@@ -193,9 +196,9 @@ export default {
     ...mapActions('d2admin/account', [
       'login'
     ]),
-    refreshTime () {
-      this.time = dayjs().format('HH:mm:ss')
-    },
+    // refreshTime () {
+    //   this.time = dayjs().format('HH:mm:ss')
+    // },
     /**
      * @description 接收选择一个用户快速登录的事件
      * @param {Object} user 用户信息
@@ -241,6 +244,35 @@ export default {
   background-color: $backgroundColor;
   height: 100%;
   position: relative;
+
+  .user-login-bg {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-size: cover;
+  }
+
+  .content-wrapper {
+    position: absolute;
+    top: -100px;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    max-width: 1080px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    .slogan {
+      text-align: center;
+      color: #fff;
+      font-size: 36px;
+      letter-spacing: 2px;
+      line-height: 48px;
+    }
+  }
   // 层
   .page-login--layer {
     @extend %full;
@@ -280,6 +312,13 @@ export default {
   }
   // 登录表单
   .page-login--form {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    padding: 30px 40px;
+    background-color: #fff;
+    border-radius: 6px;
+    box-shadow: 1px 1px 2px #eee;
     width: 280px;
     // 卡片
     .el-card {
